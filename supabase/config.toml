@@ -1,1 +1,4 @@
 project_id = "ftbqepwxqlvlzguudpxu"
+
+[functions.identify-rock]
+verify_jwt = false
