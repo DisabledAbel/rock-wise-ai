@@ -2,39 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Geological Rock Identification Assistant Design System
+All colors inspired by natural rock formations and minerals - HSL only
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core geological palette */
+    --background: 45 25% 97%;
+    --foreground: 25 15% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 45 20% 98%;
+    --card-foreground: 25 15% 20%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 45 20% 98%;
+    --popover-foreground: 25 15% 20%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Earth tones - inspired by slate and granite */
+    --primary: 25 25% 25%;
+    --primary-foreground: 45 20% 95%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Sedimentary layers - warm beige */
+    --secondary: 35 30% 88%;
+    --secondary-foreground: 25 25% 25%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Weathered stone - muted tones */
+    --muted: 35 15% 92%;
+    --muted-foreground: 25 15% 55%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Mineral accent - copper/bronze */
+    --accent: 25 35% 75%;
+    --accent-foreground: 25 25% 15%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Warning - volcanic red */
+    --destructive: 5 75% 55%;
+    --destructive-foreground: 45 20% 95%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 35 20% 85%;
+    --input: 35 20% 90%;
+    --ring: 25 25% 25%;
+
+    /* Custom geological colors */
+    --granite: 220 10% 45%;
+    --slate: 210 15% 35%;
+    --sandstone: 35 40% 70%;
+    --limestone: 45 25% 85%;
+    --quartz: 0 0% 95%;
+    --copper: 25 60% 50%;
+    --iron: 15 30% 30%;
+
+    /* Gradients for depth and texture */
+    --gradient-stone: linear-gradient(135deg, hsl(var(--granite)), hsl(var(--slate)));
+    --gradient-earth: linear-gradient(180deg, hsl(var(--sandstone)), hsl(var(--limestone)));
+    --gradient-mineral: linear-gradient(45deg, hsl(var(--copper)), hsl(var(--iron)));
+
+    /* Shadows with geological depth */
+    --shadow-outcrop: 0 8px 25px -8px hsl(var(--granite) / 0.3);
+    --shadow-stratum: 0 4px 15px -4px hsl(var(--slate) / 0.2);
 
     --radius: 0.5rem;
 
@@ -91,6 +115,54 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 25 15% 8%;
+    --foreground: 45 20% 95%;
+
+    --card: 25 15% 10%;
+    --card-foreground: 45 20% 90%;
+
+    --popover: 25 15% 10%;
+    --popover-foreground: 45 20% 90%;
+
+    --primary: 45 20% 90%;
+    --primary-foreground: 25 15% 15%;
+
+    --secondary: 25 20% 18%;
+    --secondary-foreground: 45 20% 85%;
+
+    --muted: 25 15% 15%;
+    --muted-foreground: 35 10% 65%;
+
+    --accent: 25 25% 25%;
+    --accent-foreground: 45 20% 85%;
+
+    --destructive: 5 65% 45%;
+    --destructive-foreground: 45 20% 95%;
+
+    --border: 25 20% 20%;
+    --input: 25 20% 18%;
+    --ring: 45 20% 85%;
+
+    /* Dark theme geological colors */
+    --granite: 220 15% 25%;
+    --slate: 210 20% 20%;
+    --sandstone: 35 30% 40%;
+    --limestone: 45 15% 35%;
+    --quartz: 0 0% 85%;
+    --copper: 25 50% 40%;
+    --iron: 15 25% 20%;
+
+    --sidebar-background: 25 15% 8%;
+    --sidebar-foreground: 45 20% 90%;
+    --sidebar-primary: 25 50% 40%;
+    --sidebar-primary-foreground: 45 20% 95%;
+    --sidebar-accent: 25 15% 15%;
+    --sidebar-accent-foreground: 45 20% 85%;
+    --sidebar-border: 25 20% 20%;
+    --sidebar-ring: 25 50% 60%;
   }
 }
 

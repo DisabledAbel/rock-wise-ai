@@ -61,7 +61,15 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Geological theme colors
+				granite: 'hsl(var(--granite))',
+				slate: 'hsl(var(--slate))',
+				sandstone: 'hsl(var(--sandstone))',
+				limestone: 'hsl(var(--limestone))',
+				quartz: 'hsl(var(--quartz))',
+				copper: 'hsl(var(--copper))',
+				iron: 'hsl(var(--iron))'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
