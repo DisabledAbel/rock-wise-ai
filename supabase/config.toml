@@ -2,3 +2,6 @@ project_id = "ftbqepwxqlvlzguudpxu"
 
 [functions.identify-rock]
 verify_jwt = false
+
+[functions.rock-chat]
+verify_jwt = false

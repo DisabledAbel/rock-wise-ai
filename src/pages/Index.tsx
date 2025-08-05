@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import RockUploader from '@/components/RockUploader';
 import RockResults, { RockIdentification } from '@/components/RockResults';
+import ChatBot from '@/components/ChatBot';
 import { supabase } from '@/integrations/supabase/client';
 import heroImage from '@/assets/rock-hero.jpg';
 
@@ -216,6 +217,9 @@ const Index = () => {
           </p>
         </div>
       </footer>
+
+      {/* ChatBot */}
+      <ChatBot />
     </div>
   );
 };
