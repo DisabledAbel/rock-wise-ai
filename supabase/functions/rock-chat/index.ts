@@ -20,12 +20,15 @@ serve(async (req) => {
     }
 
     const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY');
+    console.log('ANTHROPIC_API_KEY exists:', !!ANTHROPIC_API_KEY);
+    console.log('ANTHROPIC_API_KEY length:', ANTHROPIC_API_KEY?.length || 0);
+    console.log('ANTHROPIC_API_KEY starts with sk-:', ANTHROPIC_API_KEY?.startsWith('sk-ant-') || false);
+    
     if (!ANTHROPIC_API_KEY) {
       throw new Error('ANTHROPIC_API_KEY not configured');
     }
 
     console.log('Processing chat message:', message);
-    console.log('API key exists:', !!ANTHROPIC_API_KEY);
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
