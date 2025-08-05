@@ -19,25 +19,24 @@ serve(async (req) => {
       throw new Error('No message provided');
     }
 
-    const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-    if (!OPENAI_API_KEY) {
-      throw new Error('OPENAI_API_KEY not configured');
+    const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY');
+    if (!ANTHROPIC_API_KEY) {
+      throw new Error('ANTHROPIC_API_KEY not configured');
     }
 
     console.log('Processing chat message:', message);
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        'x-api-key': ANTHROPIC_API_KEY,
         'Content-Type': 'application/json',
+        'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          {
-            role: 'system',
-            content: `You are Rock Wise AI, a knowledgeable geological assistant specializing in rock and mineral identification, geological processes, and earth sciences. You provide accurate, educational, and engaging information about:
+        model: 'claude-3-5-sonnet-20241022',
+        max_tokens: 500,
+        system: `You are Rock Wise AI, a knowledgeable geological assistant specializing in rock and mineral identification, geological processes, and earth sciences. You provide accurate, educational, and engaging information about:
 
 - Rock types (igneous, sedimentary, metamorphic)
 - Mineral identification and properties
@@ -55,26 +54,24 @@ Keep your responses:
 - Focused on geology and earth sciences
 - Professional but friendly in tone
 
-If asked about topics outside geology, politely redirect the conversation back to rocks, minerals, and earth sciences.`
-          },
+If asked about topics outside geology, politely redirect the conversation back to rocks, minerals, and earth sciences.`,
+        messages: [
           {
             role: 'user',
             content: message
           }
         ],
-        temperature: 0.7,
-        max_tokens: 500,
       }),
     });
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.error('OpenAI API error:', errorData);
-      throw new Error(`OpenAI API error: ${errorData.error?.message || 'Unknown error'}`);
+      console.error('Anthropic API error:', errorData);
+      throw new Error(`Anthropic API error: ${errorData.error?.message || 'Unknown error'}`);
     }
 
     const data = await response.json();
-    const chatResponse = data.choices[0].message.content;
+    const chatResponse = data.content[0].text;
 
     console.log('Chat response generated successfully');
 
