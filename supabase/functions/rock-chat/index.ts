@@ -25,6 +25,7 @@ serve(async (req) => {
     }
 
     console.log('Processing chat message:', message);
+    console.log('API key exists:', !!ANTHROPIC_API_KEY);
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
