@@ -14,6 +14,7 @@ serve(async (req) => {
 
   try {
     const { image } = await req.json();
+    console.log('Received image for analysis, length:', image?.length || 0);
     
     if (!image) {
       throw new Error('No image provided');
@@ -23,26 +24,26 @@ serve(async (req) => {
 
     // Step 1: Analyze image with Google Vision API
     const visionAnalysis = await analyzeWithGoogleVision(image);
-    console.log('Google Vision analysis:', visionAnalysis);
+    console.log('Google Vision analysis completed:', visionAnalysis.features?.length || 0, 'features found');
 
-    // Step 2: Use Claude AI reasoning to classify the rock
-    const claudeClassification = classifyRockWithClaude(visionAnalysis);
-    console.log('Claude classification:', claudeClassification);
+    // Step 2: Use local rock classification logic
+    const rockClassification = classifyRockWithClaude(visionAnalysis);
+    console.log('Rock classification completed:', rockClassification.rockName);
 
-    // Step 3: Get detailed scientific data from Gemini
-    const geminiData = await getGeminiData(claudeClassification);
-    console.log('Gemini data:', geminiData);
+    // Step 3: Get enhanced data from Gemini
+    const enhancedData = await getGeminiData(rockClassification);
+    console.log('Gemini enhancement completed');
 
     // Step 4: Combine results into final response
     const result = {
-      rockName: geminiData.rockName || claudeClassification.rockName,
-      type: geminiData.type || claudeClassification.type,
-      composition: geminiData.composition || claudeClassification.composition,
-      hardness: geminiData.hardness || 'Unknown',
-      formation: geminiData.formation || claudeClassification.formation,
-      commonLocations: geminiData.commonLocations || ['Various locations worldwide'],
-      funFact: geminiData.funFact || 'This rock has unique geological properties.',
-      confidence: claudeClassification.confidence,
+      rockName: enhancedData.rockName || rockClassification.rockName,
+      type: enhancedData.type || rockClassification.type,
+      composition: enhancedData.composition || rockClassification.composition,
+      hardness: enhancedData.hardness || 'Unknown',
+      formation: enhancedData.formation || rockClassification.formation,
+      commonLocations: enhancedData.commonLocations || ['Various locations worldwide'],
+      funFact: enhancedData.funFact || 'This rock has unique geological properties.',
+      confidence: rockClassification.confidence,
       visualFeatures: visionAnalysis.features
     };
 
