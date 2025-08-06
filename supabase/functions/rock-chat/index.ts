@@ -14,17 +14,20 @@ serve(async (req) => {
 
   try {
     const { message } = await req.json();
+    console.log('Received request body:', { message });
 
     if (!message) {
+      console.log('No message provided');
       throw new Error('No message provided');
     }
 
     const ANTHROPIC_API_KEY = Deno.env.get('ANTHROPIC_API_KEY');
     console.log('ANTHROPIC_API_KEY exists:', !!ANTHROPIC_API_KEY);
     console.log('ANTHROPIC_API_KEY length:', ANTHROPIC_API_KEY?.length || 0);
-    console.log('ANTHROPIC_API_KEY starts with sk-:', ANTHROPIC_API_KEY?.startsWith('sk-ant-') || false);
+    console.log('ANTHROPIC_API_KEY starts with sk-ant-:', ANTHROPIC_API_KEY?.startsWith('sk-ant-') || false);
     
     if (!ANTHROPIC_API_KEY) {
+      console.log('ANTHROPIC_API_KEY not configured');
       throw new Error('ANTHROPIC_API_KEY not configured');
     }
 
