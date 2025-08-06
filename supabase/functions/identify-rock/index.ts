@@ -75,13 +75,17 @@ serve(async (req) => {
 
 async function analyzeWithGoogleVision(base64Image: string) {
   const apiKey = Deno.env.get('GOOGLE_CLOUD_API_KEY');
+  console.log('Google Cloud API key exists:', !!apiKey);
+  console.log('Google Cloud API key length:', apiKey?.length || 0);
+  
   if (!apiKey) {
+    console.error('Google Cloud API key not configured');
     throw new Error('Google Cloud API key not configured');
   }
 
   // Remove data URL prefix if present
   const imageData = base64Image.replace(/^data:image\/[a-z]+;base64,/, '');
-  console.log('Image data length:', imageData.length);
+  console.log('Image data length after processing:', imageData.length);
 
   const requestBody = {
     requests: [{
