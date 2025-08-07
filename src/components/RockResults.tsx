@@ -9,7 +9,9 @@ import {
   Hammer, 
   MapPin, 
   Lightbulb,
-  AlertCircle 
+  AlertCircle,
+  Eye,
+  Cpu
 } from 'lucide-react';
 
 export interface RockIdentification {
@@ -21,6 +23,8 @@ export interface RockIdentification {
   commonLocations: string[];
   funFact: string;
   confidence: number;
+  visualFeatures?: string[];
+  analysisSource?: string;
 }
 
 interface RockResultsProps {
@@ -155,6 +159,45 @@ const RockResults: React.FC<RockResultsProps> = ({ results, analysisImage }) => 
           </div>
         </CardContent>
       </Card>
+
+      {/* Visual Features */}
+      {results.visualFeatures && results.visualFeatures.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Eye className="h-5 w-5 text-quartz" />
+              Visual Features Detected
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-2">
+              {results.visualFeatures.map((feature, index) => (
+                <Badge key={index} variant="outline" className="text-sm bg-quartz/10 border-quartz/30">
+                  {feature}
+                </Badge>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Analysis Source */}
+      {results.analysisSource && (
+        <Card className="bg-gradient-to-r from-quartz/10 to-copper/10 border-copper/30">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-copper">
+              <Cpu className="h-5 w-5" />
+              Analysis Technology
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-foreground text-sm font-medium">{results.analysisSource}</p>
+            <p className="text-muted-foreground text-xs mt-1">
+              Advanced AI technology combining multiple analysis engines for comprehensive rock identification
+            </p>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Fun Fact */}
       <Card className="bg-gradient-to-r from-sandstone/10 to-limestone/10 border-copper/20">
