@@ -21,30 +21,6 @@ An advanced AI-powered geological identification system that analyzes rock and m
 
 ## 🚀 Quick Start
 
-▲ Vercel Deployment Guide
-✅ Setup
-Go to vercel.com
-Click “Add New Project”
-Select your GitHub repo: rock-wise-ai
-For framework preset, choose Vite (or leave default)
-🔧 Vercel Configuration
-Create a vercel.json in your root:
-{
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" }
-  ],
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist"
-}
-✅ Environment Variables
-On your Vercel dashboard → Project Settings → Environment Variables:
-Name	Value
-GEMINI_API_KEY	Your Gemini API Key
-OPENAI_API_KEY	Your OpenAI GPT-4.1 Key
-ANTHROPIC_API_KEY	Your Claude 3.5 Key
-...	Other project-specific secrets
-
-
 ### Prerequisites
 
 - Node.js 18+ and npm installed
@@ -52,6 +28,62 @@ ANTHROPIC_API_KEY	Your Claude 3.5 Key
 - API keys for AI services (optional - see configuration below)
 
 ### Installation
+# ▲ Vercel Deployment Guide for Rock Wise AI
+
+Deploy **Rock Wise AI** to [Vercel](https://vercel.com) in minutes.
+
+---
+
+## 🧩 Prerequisites
+
+- Free [Vercel](https://vercel.com/signup) account
+- Supabase project with deployed Edge Functions
+- API keys from:
+  - Google Gemini
+  - OpenAI GPT-4.1
+  - Anthropic Claude
+
+---
+
+## 🚀 One-Click Deployment
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DisabledAbel/rock-wise-ai)
+
+---
+
+## ⚙️ Manual Deployment Steps
+
+### 1. Import Your Repository
+- Go to [Vercel Dashboard](https://vercel.com/dashboard)
+- Click **“Add New Project”**
+- Choose your forked `rock-wise-ai` repo
+
+### 2. Framework Settings
+- Framework Preset: **Vite**
+- Root Directory: `/`
+- Build Command: `npm run build`
+- Output Directory: `dist`
+
+### 3. Environment Variables
+
+In Vercel → **Settings → Environment Variables**, add:
+
+| Key                 | Value                         |
+|---------------------|-------------------------------|
+| `GEMINI_API_KEY`     | Google AI Studio key           |
+| `OPENAI_API_KEY`     | OpenAI GPT-4.1 key             |
+| `ANTHROPIC_API_KEY`  | Anthropic Claude 3.5 key       |
+
+### 4. Optional: `vercel.json` Config
+
+```json
+{
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" }
+  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist"
+}
 
 1. Clone the repository:
 ```bash
