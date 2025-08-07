@@ -21,6 +21,30 @@ An advanced AI-powered geological identification system that analyzes rock and m
 
 ## 🚀 Quick Start
 
+▲ Vercel Deployment Guide
+✅ Setup
+Go to vercel.com
+Click “Add New Project”
+Select your GitHub repo: rock-wise-ai
+For framework preset, choose Vite (or leave default)
+🔧 Vercel Configuration
+Create a vercel.json in your root:
+{
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" }
+  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist"
+}
+✅ Environment Variables
+On your Vercel dashboard → Project Settings → Environment Variables:
+Name	Value
+GEMINI_API_KEY	Your Gemini API Key
+OPENAI_API_KEY	Your OpenAI GPT-4.1 Key
+ANTHROPIC_API_KEY	Your Claude 3.5 Key
+...	Other project-specific secrets
+
+
 ### Prerequisites
 
 - Node.js 18+ and npm installed
