@@ -205,6 +205,34 @@ The app is compatible with any static hosting service:
 - **Netlify**: Drag and drop the `dist` folder
 - **GitHub Pages**: Use GitHub Actions workflow
 
+### Docker Setup
+
+Containerize and run locally or in production.
+
+1. Build the image
+```bash
+docker build -t rock-wise-ai .
+```
+
+2. Run the container
+```bash
+docker run --rm -p 8080:80 rock-wise-ai
+```
+
+3. Open http://localhost:8080
+
+Notes:
+- Multi-stage Dockerfile uses Nginx to serve the Vite build from `dist`.
+- This is a static frontend; Supabase Edge Functions run separately in Supabase. Configure their secrets in Supabase, not in the container.
+
+### Vercel Setup
+
+For the full guide, see the "Vercel Deployment Guide" above. Summary:
+- Framework: Vite
+- Build: `npm run build` → `dist`
+- Add AI API keys in Project Settings → Environment Variables
+- `vercel.json` included for SPA routing and asset caching
+
 Build command: `npm run build`
 Output directory: `dist`
 
