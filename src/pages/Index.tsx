@@ -22,6 +22,7 @@ const Index = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [results, setResults] = useState<RockIdentification | null>(null);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [uploadedImageBase64, setUploadedImageBase64] = useState<string | null>(null);
 
   const analyzeRockFromFile = async (file: File) => {
     setIsAnalyzing(true);
@@ -33,6 +34,8 @@ const Index = () => {
         reader.onloadend = () => resolve(reader.result as string);
         reader.readAsDataURL(file);
       });
+
+      setUploadedImageBase64(base64);
 
       const { data, error } = await supabase.functions.invoke('identify-rock', {
         body: { image: base64 }
@@ -84,6 +87,8 @@ const Index = () => {
         reader.readAsDataURL(blob);
       });
 
+      setUploadedImageBase64(base64);
+
       const { data, error } = await supabase.functions.invoke('identify-rock', {
         body: { image: base64 }
       });
@@ -110,6 +115,7 @@ const Index = () => {
   const resetAnalysis = () => {
     setResults(null);
     setUploadedImage(null);
+    setUploadedImageBase64(null);
   };
 
   return (
@@ -256,7 +262,7 @@ const Index = () => {
       </footer>
 
       {/* ChatBot */}
-      <ChatBot />
+      <ChatBot currentContext={{ results: results || undefined, imageBase64: uploadedImageBase64 || undefined }} />
     </div>
   );
 };

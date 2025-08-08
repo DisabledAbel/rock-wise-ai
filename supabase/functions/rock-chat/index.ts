@@ -13,8 +13,8 @@ serve(async (req) => {
   }
 
   try {
-    const { message } = await req.json();
-    console.log('Received request body:', { message });
+    const { message, context } = await req.json();
+    console.log('Received request body:', { hasMessage: !!message, hasContext: !!context });
 
     if (!message) {
       console.log('No message provided');
@@ -32,17 +32,10 @@ serve(async (req) => {
 
     console.log('Processing chat message:', message);
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [
-              {
-                text: `You are Rock Wise AI, a knowledgeable geological assistant specializing in rock and mineral identification, geological processes, and earth sciences. You provide accurate, educational, and engaging information about:
+    // Build prompt parts with optional page context and image
+    const parts: any[] = [];
+
+    let systemText = `You are Rock Wise AI, a knowledgeable geological assistant specializing in rock and mineral identification, geological processes, and earth sciences. You provide accurate, educational, and engaging information about:
 
 - Rock types (igneous, sedimentary, metamorphic)
 - Mineral identification and properties
@@ -60,12 +53,41 @@ Keep your responses:
 - Focused on geology and earth sciences
 - Professional but friendly in tone
 
-If asked about topics outside geology, politely redirect the conversation back to rocks, minerals, and earth sciences.
+If asked about topics outside geology, politely redirect the conversation back to rocks, minerals, and earth sciences.`;
 
-User question: ${message}`
-              }
-            ]
-          }
+    if (context?.results) {
+      try {
+        const contextJson = JSON.stringify(context.results);
+        systemText += `\n\nCurrent page context: The user is viewing an analyzed rock specimen. Use the provided analysis JSON as primary context and be specific to the specimen shown.\nAnalysis JSON:\n${contextJson}`;
+      } catch (_) {
+        // ignore
+      }
+    }
+
+    parts.push({ text: systemText });
+
+    if (context?.imageBase64) {
+      try {
+        const raw = String(context.imageBase64);
+        const match = raw.match(/^data:(.*?);base64,(.*)$/);
+        const mimeType = match?.[1] || 'image/jpeg';
+        const dataB64 = match?.[2] || raw;
+        parts.push({ inlineData: { mimeType, data: dataB64 } });
+      } catch (e) {
+        console.log('Failed to attach image context:', e);
+      }
+    }
+
+    parts.push({ text: `User question: ${message}` });
+
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contents: [
+          { parts }
         ],
         generationConfig: {
           temperature: 0.7,

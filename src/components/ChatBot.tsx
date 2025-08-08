@@ -26,9 +26,13 @@ interface Message {
 
 interface ChatBotProps {
   className?: string;
+  currentContext?: {
+    results?: any;
+    imageBase64?: string;
+  };
 }
 
-const ChatBot: React.FC<ChatBotProps> = ({ className }) => {
+const ChatBot: React.FC<ChatBotProps> = ({ className, currentContext }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
@@ -65,7 +69,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ className }) => {
 
     try {
       const { data, error } = await supabase.functions.invoke('rock-chat', {
-        body: { message: inputValue }
+        body: { message: inputValue, context: currentContext }
       });
 
       if (error) throw error;
