@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.rock-chat]
 verify_jwt = false
+
+[functions.youtube-rock-videos]
+verify_jwt = false

@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import RockUploader from '@/components/RockUploader';
 import RockResults, { RockIdentification } from '@/components/RockResults';
+import RockVideos from '@/components/RockVideos';
 import ChatBot from '@/components/ChatBot';
 import { supabase } from '@/integrations/supabase/client';
 import heroImage from '@/assets/rock-hero.jpg';
@@ -234,6 +235,8 @@ const Index = () => {
                 results={results}
                 analysisImage={uploadedImage || undefined}
               />
+
+              <RockVideos rockName={results.rockName} />
             </div>
           )}
         </div>
