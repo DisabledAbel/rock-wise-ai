@@ -22,9 +22,43 @@ const Index = () => {
   const [results, setResults] = useState<RockIdentification | null>(null);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
+  const analyzeRockFromFile = async (file: File) => {
+    setIsAnalyzing(true);
+    setResults(null);
+
+    try {
+      const base64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.readAsDataURL(file);
+      });
+
+      const { data, error } = await supabase.functions.invoke('identify-rock', {
+        body: { image: base64 }
+      });
+
+      if (error) throw error;
+
+      setResults(data);
+      toast({
+        title: "Analysis Complete",
+        description: `Identified as ${data.rockName} with ${data.confidence}% confidence`,
+      });
+    } catch (error) {
+      console.error('Error analyzing rock:', error);
+      toast({
+        title: "Analysis Failed",
+        description: "There was an error analyzing your rock. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
   const handleImageUpload = async (file: File) => {
     setUploadedImage(URL.createObjectURL(file));
-    setResults(null);
+    await analyzeRockFromFile(file);
   };
 
   const analyzeRock = async () => {

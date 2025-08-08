@@ -74,7 +74,7 @@ const RockUploader: React.FC<RockUploaderProps> = ({ onImageUpload, isAnalyzing 
                 className="max-w-full max-h-64 mx-auto rounded-lg shadow-lg"
               />
               <p className="text-sm text-muted-foreground">
-                {isAnalyzing ? "Analyzing your rock specimen..." : "Click 'Analyze Rock' to identify"}
+                {isAnalyzing ? "Analyzing your rock specimen..." : "Image uploaded. Analysis will start automatically."}
               </p>
             </div>
           ) : (
