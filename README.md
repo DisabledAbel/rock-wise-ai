@@ -191,12 +191,6 @@ supabase/
 
 ## 🌐 Deployment
 
-### Via Lovable
-
-1. Open your [Lovable project](https://lovable.dev/projects/f1f55208-9182-458a-82f4-261ab7395f31)
-2. Click Share → Publish
-3. Your app will be deployed instantly
-
 ### Manual Deployment
 
 The app is compatible with any static hosting service:
